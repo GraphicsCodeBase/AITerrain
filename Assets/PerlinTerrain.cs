@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PerlinTerrain : MonoBehaviour
@@ -33,7 +34,9 @@ public class PerlinTerrain : MonoBehaviour
         {
             for (int x = 0; x <= width; x++)
             {
-                float y = Mathf.PerlinNoise(x * noiseScale, z * noiseScale) * scale;
+                float perlin = Mathf.PerlinNoise(x * noiseScale, z * noiseScale);
+                float voronoi = VoronoiNoice.GenerateVoronoi(x, z, 10f);
+                float y = perlin * voronoi * scale;
                 vertices[i++] = new Vector3(x, y, z);
             }
         }
@@ -81,4 +84,9 @@ public class PerlinTerrain : MonoBehaviour
             lastNoiseScale = noiseScale;
         }
     }
+
+   
 }
+
+
+
