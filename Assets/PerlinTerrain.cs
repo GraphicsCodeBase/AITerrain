@@ -20,12 +20,14 @@ public class PerlinTerrain : MonoBehaviour
         lastScale = scale;
         lastWidth = width;
         lastHeight = height;
+        PerlinBiome.setFrequency(1.0f, 1.0f, 1.0f);
     }
 
    public void GenerateTerrain()
    {
         Mesh mesh = new Mesh();
         Vector3[] vertices = new Vector3[(width + 1) * (height + 1)];
+        Color[] colorLayer = new Color[(width + 1) * (height + 1)];
         int[] triangles = new int[width * height * 6];
 
         // Generate vertices
@@ -34,10 +36,17 @@ public class PerlinTerrain : MonoBehaviour
         {
             for (int x = 0; x <= width; x++)
             {
+                //generate height using voronoi and perlin
                 float perlin = Mathf.PerlinNoise(x * noiseScale, z * noiseScale);
                 float voronoi = VoronoiNoice.GenerateVoronoi(x, z, 10f);
                 float y = perlin * voronoi * scale;
-                vertices[i++] = new Vector3(x, y, z);
+
+                //Generate biome/color using perlin
+                Biome biome = PerlinBiome.getBiome(x, z);
+                colorLayer[i] = PerlinBiome.GetBiomeColor(biome);
+                vertices[i] = new Vector3(x, y, z);
+
+                i++;
             }
         }
 
@@ -64,6 +73,7 @@ public class PerlinTerrain : MonoBehaviour
         // Finalize mesh
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.colors = colorLayer;
         mesh.RecalculateNormals();
 
         // Assign mesh to MeshFilter
