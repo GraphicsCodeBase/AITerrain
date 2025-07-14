@@ -92,7 +92,7 @@ public class PerlinTerrain : MonoBehaviour
     {
         if (scale != lastScale || width != lastWidth || height != lastHeight)
         {
-            GenerateTerrain();
+            //GenerateTerrain();
             lastScale = scale;
             lastWidth = width;
             lastHeight = height;
