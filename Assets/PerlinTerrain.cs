@@ -7,6 +7,9 @@ public class PerlinTerrain : MonoBehaviour
     [Range(10, 200)] public int height = 100;
     [Range(1f, 50f)] public float scale = 10f;
     [Range(0.01f, 1f)] public float noiseScale = 0.1f;
+    [Range(0f, 1f)] public float desertFrequency = 0.3f;
+    [Range(0f, 1f)] public float forestFrequency = 0.3f;
+    [Range(0f, 1f)] public float plainFrequency = 0.3f;
 
     private float   lastScale ;
     private int     lastWidth ;
@@ -20,7 +23,9 @@ public class PerlinTerrain : MonoBehaviour
         lastScale = scale;
         lastWidth = width;
         lastHeight = height;
-        PerlinBiome.setFrequency(1.0f, 1.0f, 1.0f);
+        PerlinBiome.setPlainFrequency(1.0f);
+        PerlinBiome.setForestFrequency(1.0f);
+        PerlinBiome.setDesertFrequency(1.0f);
     }
 
    public void GenerateTerrain()

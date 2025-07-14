@@ -9,16 +9,39 @@ public enum Biome
 
 static public class PerlinBiome
 {
-    static public void setFrequency(float plain, float desert, float forest)
+    static public void setPlainFrequency(float plain)
     {
         plainFrequency = plain;
+    }
+
+    static public void setDesertFrequency(float desert)
+    {
         desertFrequency = desert;
+    }
+
+    static public void setForestFrequency(float forest)
+    {
         forestFrequency = forest;
+    }
+
+    static public float getPlainFrequency()
+    {
+        return plainFrequency;
+    }
+
+    static public float getDesertFrequency()
+    {
+        return desertFrequency;
+    }
+
+    static public float getForestFrequency()
+    {
+        return forestFrequency;
     }
 
     static public Biome getBiome(float x, float z)
     {
-        float noise = Mathf.PerlinNoise(x * biomeScale, z * biomeScale);
+        float noise = VoronoiNoice.GenerateVoronoi(x * biomeScale, z * biomeScale, 1000f);
         float totalWeight = plainFrequency + desertFrequency + forestFrequency;
 
         float plainLimit = plainFrequency / totalWeight;

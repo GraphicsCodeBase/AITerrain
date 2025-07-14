@@ -9,6 +9,9 @@ public class Slider_script : MonoBehaviour
     public Slider heightSlider;
     public Slider scaleSlider;
     public Slider noiseScaleSlider;
+    public Slider desertFrequency;
+    public Slider forrestFrequency;
+    public Slider plainFrequency;
 
     void Start()
     {
@@ -42,6 +45,25 @@ public class Slider_script : MonoBehaviour
             terrain.noiseScale = val;
             terrain.GenerateTerrain();
         });
+
+        desertFrequency.onValueChanged.AddListener(val =>
+        {
+            PerlinBiome.setDesertFrequency(val);
+            terrain.GenerateTerrain();
+        });
+
+        forrestFrequency.onValueChanged.AddListener(val =>
+        {
+            PerlinBiome.setForestFrequency(val);
+            terrain.GenerateTerrain();
+        });
+
+        plainFrequency.onValueChanged.AddListener(val =>
+        {
+            PerlinBiome.setPlainFrequency(val);
+            terrain.GenerateTerrain();
+        });
+
     }
 
 }
