@@ -4,7 +4,8 @@ public enum Biome
 {
     plain,
     desert,
-    forest
+    forest,
+    snow
 }
 
 static public class PerlinBiome
@@ -24,6 +25,11 @@ static public class PerlinBiome
         forestFrequency = forest;
     }
 
+    static public void setSnowFrequency(float plain)
+    {
+        snowFrequency = plain;
+    }
+
     static public float getPlainFrequency()
     {
         return plainFrequency;
@@ -39,17 +45,24 @@ static public class PerlinBiome
         return forestFrequency;
     }
 
+    static public float getSnowFrequency()
+    {
+        return snowFrequency;
+    }
+
     static public Biome getBiome(float x, float z)
     {
         float noise = VoronoiNoice.GenerateVoronoi(x * biomeScale, z * biomeScale, 1000f);
-        float totalWeight = plainFrequency + desertFrequency + forestFrequency;
+        float totalWeight = plainFrequency + desertFrequency + forestFrequency + snowFrequency;
 
         float plainLimit = plainFrequency / totalWeight;
         float desertLimit = desertFrequency / totalWeight + plainLimit;
+        float forestLimit = forestFrequency / totalWeight + desertLimit;
 
         if (noise < plainLimit) return Biome.plain;
         else if (noise < desertLimit) return Biome.desert;
-        else return Biome.forest;
+        else if (noise < forestLimit) return Biome.forest;
+        else return Biome.snow;
     }
 
     static public Color GetBiomeColor(Biome biome)
@@ -59,6 +72,7 @@ static public class PerlinBiome
             Biome.desert => Color.red,
             Biome.plain => Color.green,
             Biome.forest => Color.blue,
+            Biome.snow => Color.white,
             _ => Color.gray
         };
     }
@@ -66,6 +80,7 @@ static public class PerlinBiome
     static private float plainFrequency;
     static private float desertFrequency;
     static private float forestFrequency;
+    static private float snowFrequency;
 
     static private float biomeScale = 0.01f;
 }

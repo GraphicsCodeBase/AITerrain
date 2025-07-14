@@ -12,6 +12,7 @@ public class Slider_script : MonoBehaviour
     public Slider desertFrequency;
     public Slider forrestFrequency;
     public Slider plainFrequency;
+    public Button generate;
 
     void Start()
     {
@@ -25,42 +26,40 @@ public class Slider_script : MonoBehaviour
         widthSlider.onValueChanged.AddListener(val =>
         {
             terrain.width = Mathf.RoundToInt(val);
-            terrain.GenerateTerrain();
         });
 
         heightSlider.onValueChanged.AddListener(val =>
         {
             terrain.height = Mathf.RoundToInt(val);
-            terrain.GenerateTerrain();
         });
 
         scaleSlider.onValueChanged.AddListener(val =>
         {
             terrain.scale = val;
-            terrain.GenerateTerrain();
         });
 
         noiseScaleSlider.onValueChanged.AddListener(val =>
         {
             terrain.noiseScale = val;
-            terrain.GenerateTerrain();
         });
 
         desertFrequency.onValueChanged.AddListener(val =>
         {
             PerlinBiome.setDesertFrequency(val);
-            terrain.GenerateTerrain();
         });
 
         forrestFrequency.onValueChanged.AddListener(val =>
         {
             PerlinBiome.setForestFrequency(val);
-            terrain.GenerateTerrain();
         });
 
         plainFrequency.onValueChanged.AddListener(val =>
         {
             PerlinBiome.setPlainFrequency(val);
+        });
+
+        generate.onClick.AddListener(() =>
+        {
             terrain.GenerateTerrain();
         });
 

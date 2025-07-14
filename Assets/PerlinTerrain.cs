@@ -26,6 +26,7 @@ public class PerlinTerrain : MonoBehaviour
         PerlinBiome.setPlainFrequency(1.0f);
         PerlinBiome.setForestFrequency(1.0f);
         PerlinBiome.setDesertFrequency(1.0f);
+        PerlinBiome.setSnowFrequency(0f);
     }
 
    public void GenerateTerrain()
@@ -43,7 +44,7 @@ public class PerlinTerrain : MonoBehaviour
             {
                 //generate height using voronoi and perlin
                 float perlin = Mathf.PerlinNoise(x * noiseScale, z * noiseScale);
-                float voronoi = VoronoiNoice.GenerateVoronoi(x, z, 10f);
+                float voronoi = VoronoiNoice.GenerateVoronoi(x, z, 1000f);
                 float y = perlin * voronoi * scale;
 
                 //Generate biome/color using perlin
